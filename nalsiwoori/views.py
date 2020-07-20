@@ -6,6 +6,11 @@ def index(request):
     return render(request, 'nalsiwoori/index.html')
     
 def login(request):
+    user_id = request.POST.get('user_id')
+    user_pw = request.POST.get('user_pwd')
+    print(user_id,user_pwd)
+    request.session['user_id'] = user_id
+    return HttpResponse("로그인완료")
     return render(request, 'nalsiwoori/login.html')
 
 def logout(request):
