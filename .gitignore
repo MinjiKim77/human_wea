@@ -7,6 +7,9 @@
 *.pot
 *.pyc
 __pycache__/
+human_wea/__pycache__/
+nalsiwoori/__pycache__/
+nalsiwoori/migrations/__pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
