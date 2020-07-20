@@ -1,1 +1,132 @@
-login 페이지
+<!-- 로그인, 가입하기 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>날씨우리</title>
+    <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+</head>
+
+<body>
+    <div class="form">
+        
+        <ul class="tab-group">
+            <li class="tab"><a href="#login">로그인하기</a></li>
+            <li class="tab active"><a href="#signup">가입하기</a></li>
+            
+        </ul>
+            
+        <div class="tab-content">
+        
+                    
+            <div id="login">   
+                <h1>로그인해주세요</h1>
+                
+                <form action="/" method="post">
+                
+                <div class="field-wrap">
+                    
+                    <input name="user_id" value='' id="user_email" placeholder="E-mail을 입력해주세요" type="text"/>
+                </div>
+                
+                <div class="field-wrap">
+                    <input name="user_pwd" value='' id="user_pwd" placeholder="비밀번호" type="password" />
+                </div>
+                
+                <p class="forgot"><a href="#">ID/PW찾기</a></p>
+                
+                <button class="button button-block"/><a href = "/index.html">로그인하기</a></button>
+                
+                
+                </form>
+
+            </div>
+        
+            
+                <div id="signup">   
+                    <h1>가입해주세요</h1>
+                
+                    <form action="/" method="post">
+                
+                    <div class="top-row">
+                        <div class="field-wrap">
+                            <input name="user_name" value='' id="user_name" placeholder="이름을 입력해주세요" type="text" />
+                        </div>
+                
+                        <div class="field-wrap">
+                            <input name="user_nick" value='' id="user_nick" placeholder="닉네임을 설정해주세요" type="text" />
+                        </div>
+                    </div>
+
+                        <div class="field-wrap">
+                            <input name="user_email" value='' id="user_email" placeholder="이메일을 설정해주세요" type="text" />
+                        </div>
+                
+                        <div class="field-wrap">
+                            <input name="user_pwd" value='' id="user_pwd" placeholder="비밀번호를 설정해주세요" type="text" />
+                        </div>
+                
+                    <button type="submit" class="button button-block"/><a href="#login">가입하기</a></button>
+                
+                </form>
+
+                </div>
+            </div>
+            
+        </div>
+        
+    </div> 
+
+ 
+    <script>
+        $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+  
+            var $this = $(this),
+                label = $this.prev('label');
+          
+                if (e.type === 'keyup') {
+                      if ($this.val() === '') {
+                    label.removeClass('active highlight');
+                  } else {
+                    label.addClass('active highlight');
+                  }
+              } else if (e.type === 'blur') {
+                  if( $this.val() === '' ) {
+                      label.removeClass('active highlight'); 
+                      } else {
+                      label.removeClass('highlight');   
+                      }   
+              } else if (e.type === 'focus') {
+                
+                if( $this.val() === '' ) {
+                      label.removeClass('highlight'); 
+                      } 
+                else if( $this.val() !== '' ) {
+                      label.addClass('highlight');
+                      }
+              }
+          
+          });
+          
+          $('.tab a').on('click', function (e) {
+            
+            e.preventDefault();
+            
+            $(this).parent().addClass('active');
+            $(this).parent().siblings().removeClass('active');
+            
+            target = $(this).attr('href');
+          
+            $('.tab-content > div').not(target).hide();
+            
+            $(target).fadeIn(600);
+            
+          });
+    </script>
+
+</body>
+
+
+</html>

@@ -7,7 +7,11 @@ def index(request):
     return render(request, 'nalsiwoori/home.html')
     
 def login(request):
-    return render(request, 'nalsiwoori/home.html')
+    user_id = request.POST.get('user_id')
+    user_pwd = request.POST.get('user_pwd')
+    print(user_id,user_pwd)
+    request.session['user_id'] = user_id
+    return render(request, 'nalsiwoori/login.html')
 
 def logout(request):
     pass
