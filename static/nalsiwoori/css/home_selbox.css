@@ -29,12 +29,12 @@ button{
   background-color:#d8d64a;
   color:white;
   padding:18px;
-  width:50px;
+  width:200px;
   font-family:arial,tahoma;
   font-size:16px;
   font-weight:bold;
   color:#fff;
-  text-align:left;
+  text-align:center;
   text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
   border-radius:3px;
   -webkit-border-radius:5px;
@@ -46,7 +46,7 @@ button{
         -ms-transition:0.3s ease all;
           -o-transition:0.3s ease all;
             transition:0.3s ease all;
-  margin: auto;
+
 }
   #blue {
     background-color:#3498DB;
@@ -71,7 +71,20 @@ button{
   #red:hover {
     background-color:#C0392B;
   }
-  
+
+  .container{
+    margin:100px;
+  }
+
+  .container p{
+    width: 380px;
+    margin: 0 auto;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+  }
+
+
   select:focus, select:active {
     border:0;
     outline:0;
