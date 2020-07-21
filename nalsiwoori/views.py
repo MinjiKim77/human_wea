@@ -44,7 +44,7 @@ def course(request):
     return render(request, 'nalsiwoori/course.html')
 
 def home(request):
-    sel_list = Selection.objects.order_by('-pub_date')[:5]
+    sel_list = Selection.objects.order_by('-pub_date')[:10]
     # sel_list = Selection.objects.all()
     html = ''
 
