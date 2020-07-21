@@ -123,42 +123,66 @@
             var $city = $(this).next(); // 선택영역 군구 객체
             $("option",$city).remove(); // 구군 초기화
 
-            if(area == "area0")
-              $city.append("<option value=''>구/군 선택</option>");
-            else {
-              $.each(eval(area), function() {
-                $city.append("<option value='"+this+"'>"+this+"</option>");
-              });
-            }
-          });
-        });
-        </script>
-        <!-- Kakao API 호출 -->
-        <div id="map" style="width:800px;height:400px;margin: auto;"></div>
-        <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
-        <script>
-    
-            var container = document.getElementById('map'); //지도를 생성할공간
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), //중심좌표
-                level: 3
-            };
-    
-            var map = new kakao.maps.Map(container, options); //지도생성
-            
-            var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); //마커표시 위치 -> 딕셔너리로 수정예정
-    
-            // 마커를 생성
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
+          if(area == "area0")
+            $city.append("<option value=''>구/군 선택</option>");
+          else {
+            $.each(eval(area), function() {
+              $city.append("<option value='"+this+"'>"+this+"</option>");
             });
-            
-            marker.setMap(map);
-        </script>
-      <br/>
-    <script>
-    //log_table JS
+          }
+        });
+      });
+      </script>
+      <div id="map" style="width:800px;height:400px;margin: auto;"></div>
+      <script type="text/javascript"
+          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
+      <script>
+  
+          var container = document.getElementById('map'); //지도를 생성할공간
+          var options = {
+              center: new kakao.maps.LatLng(37.5579452, 126.9941904), //중심좌표
+              level: 9
+          };
+  
+          var map = new kakao.maps.Map(container, options); //지도생성
+          var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+          var imageSize = new kakao.maps.Size(24, 35); 
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  //마커만들기
+
+          $.ajax({
+            url:'/nalsiwoori/load_map_db/',
+            success:function(res){
+              var positions = new Array();
+
+              for(var i=0;i<res.length;i++){
+                var data_lat = res[i].lat;
+                var data_lng = res[i].lng;
+                positions.push(new kakao.maps.LatLng(data_lat, data_lng));
+
+                var customOverlay = new kakao.maps.CustomOverlay({
+                  position: positions[i],
+                  content: `<div class ="label"><span class="left"></span><span class="center">${res[i].city}</span><span class="right"></span></div>`   
+                });
+                customOverlay.setMap(map);
+              }
+            }
+          })
+          
+
+      </script>
+
+    <br/>
+  <script>
+  // 시간마다 함수호출
+  // window.onload = f
+  // function f(){
+  //   var timescope = 2000;
+  //   var user_wea = setInterval(function(){
+  //     console.log("2초 경과")
+  //   }, timescope)
+  // }
+  </script>
+  <script>
     $(window).on("load resize ", function() {
       var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
       $('.tbl-header').css({'padding-right':scrollWidth});
