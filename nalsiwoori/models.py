@@ -24,5 +24,3 @@ class Selection(models.Model):
     city = models.CharField(max_length=255)
     cur_wea = models.CharField(max_length=255)
     pub_date = models.DateTimeField(default=timezone.now())
-    # def __str__(self):
-    #     return '지금 %s %s %s의 날씨는 %s입니다 !!!' % (self.state, self.city, self.street, self.cur_wea)

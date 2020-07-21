@@ -1,11 +1,12 @@
-select{
+/* 셀렉트 박스 css_class로 정리_complete */
+.selector{
     background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
     background-repeat:no-repeat;
-    background-position: right 5px top 35px;
+    background-position: right 5px top 20px;
     background-size: 10px 10px;
     color:white;
-    padding:18px;
-    width:150px;
+    padding:12px;
+    width:200px;
     font-family:arial,tahoma;
     font-size:16px;
     font-weight:bold;
@@ -22,12 +23,12 @@ select{
           -ms-transition:0.3s ease all;
            -o-transition:0.3s ease all;
               transition:0.3s ease all;
-    margin: auto;
   }
-button{
-  background-color:#d8d64a;
+/* 셀렉트 박스와 동일_complete */
+.buttoner{
+  background-color:#0004ff;
   color:white;
-  padding:18px;
+  padding:12px;
   width:200px;
   font-family:arial,tahoma;
   font-size:16px;
@@ -48,55 +49,35 @@ button{
 
 }
   #state1 {
-    background-color:#3498DB;
+    background-color:#ff0000;
   }
   
   #state1:hover {
-    background-color:#2980B9;
+    background-color:#ff00009f;
   }
   
   #city1 {
-    background-color:#2ECC71;
+    background-color:#ffae00;
   }
   
   #city1:hover {
-    background-color:#27AE60;
+    background-color:#ffae008e;
   }
   
   #cur_wea {
-    background-color:#E74C3C;
+    background-color:#2ECC71;
   }
   
   #cur_wea:hover {
-    background-color:#C0392B;
+    background-color:#2ecc7091;
   }
-  #cur_wea {
-    background-color:#E74C3C;
-  }
-  
-  #cur_wea:hover {
-    background-color:#C0392B;
-  }
-
-  /* .container{
-    margin:100px;
-  } */
-
-  /* .container{
-    width: 380px;
-    margin: 100px;
-    height: 50px;
-    line-height: 50px;
-    text-align: left;
-  } */
-
 
   select:focus, select:active {
     border:0;
     outline:0;
   }
-  
-h1{
+
+#log_table_title{
   font-size: 30px;
   color: #fff;
   text-transform: uppercase;
@@ -130,27 +111,22 @@ td{
   text-align: left;
   vertical-align:middle;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 20px;
   color: #fff;
   border-bottom: solid 1px rgba(255,255,255,0.1);
 }
 
-
-/* demo styles */
-
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 body{
-  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-  background: linear-gradient(to right, #1b49c575, #25b7c4);
+  background: -webkit-linear-gradient(left, #00ff95, #1100ff81);
+  background: linear-gradient(to right, #190be460, #14e28c);
   font-family: 'Roboto', sans-serif;
 }
 section{
   margin: 50px;
 }
 
-
-/* follow me template */
-.log_table {
+.Copyright {
   margin-top: 40px;
   padding: 10px;
   clear: left;
@@ -159,24 +135,21 @@ section{
   font-family: arial;
   color: #fff;
 }
-.log_table i {
+.Copyright i {
   font-style: normal;
   color: #F50057;
   font-size: 14px;
   position: relative;
   top: 2px;
 }
-.log_table a {
+.Copyright a {
   color: #fff;
   text-decoration: none;
 }
-.log_table a:hover {
+.Copyright a:hover {
   text-decoration: underline;
 }
-
-
-/* for custom scrollbar for webkit browser*/
-
+/* 스크롤바 custom */
 ::-webkit-scrollbar {
     width: 6px;
 } 
@@ -185,4 +158,26 @@ section{
 } 
 ::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+/* bootstrap dropdown hover menu*/
+
+/* body {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #4f5d6e;
+  position: relative;
+  background: rgb(26, 49, 95);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(26, 49, 95, 1)), color-stop(10%, rgba(26, 49, 95, 1)), color-stop(24%, rgba(29, 108, 141, 1)), color-stop(37%, rgba(41, 136, 151, 1)), color-stop(77%, rgba(39, 45, 100, 1)), color-stop(90%, rgba(26, 49, 95, 1)), color-stop(100%, rgba(26, 49, 95, 1)));
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#1a315f', endColorstr='#1a315f', GradientType=0);
+} */
+
+nav {
+  margin-top: 60px;
+  box-shadow: 5px 4px 5px #000;
+}
+#home_title{
+  text-align: center;
+  text-emphasis: active;
+  font-size: 25px;
 }

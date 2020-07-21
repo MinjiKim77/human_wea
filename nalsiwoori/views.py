@@ -55,7 +55,6 @@ def home(request):
     # return HttpResponse(html)
 
 def log_wea(request):
-
     state = request.GET.get('state1')
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
