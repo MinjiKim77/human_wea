@@ -68,8 +68,8 @@
                 'cur_wea': $('[name=cur_wea]').val(),
               },
               success: function(res) {
-                alert(res.result)
-                $('.container').html(data);
+                alert(res)
+                $('#aaa').html(res);
               }
             })
           })
@@ -189,6 +189,7 @@
     }).resize();
     </script>
     <section>
+      <div id='aaa'></div>
       <h1>실시간 지역별 날씨</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">

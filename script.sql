@@ -1,23 +1,4 @@
-BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS "nalsiwoori_map_data" (
-	"id"	integer NOT NULL,
-	"state"	varchar(255) NOT NULL,
-	"city"	varchar(255) NOT NULL,
-	"lat"	integer NOT NULL,
-	"lng"	integer NOT NULL,
-	"map_x"	integer NOT NULL,
-	"map_y"	integer NOT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
-CREATE TABLE IF NOT EXISTS "nalsiwoori_selection" (
-	"id"	integer NOT NULL,
-	"state"	varchar(255) NOT NULL,
-	"city"	varchar(255) NOT NULL,
-	"street"	varchar(255) NOT NULL,
-	"cur_wea"	varchar(255) NOT NULL,
-	"pub_date"	datetime NOT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
+
 INSERT INTO "nalsiwoori_map_data" ("id","state","city","lat","lng","map_x","map_y") VALUES (1,'서울특별시','강남구',37.4959854,127.0664091,61,126),
  (2,'서울특별시','강동구',37.5492077,127.1464824,62,126),
  (3,'서울특별시','강북구',37.6469954,127.0147158,61,128),
@@ -73,9 +54,5 @@ INSERT INTO "nalsiwoori_map_data" ("id","state","city","lat","lng","map_x","map_
  (53,'경기도','양평군',37.481172,127.510828,69,125),
  (54,'경기도','여주군',37.295006,127.622306,71,121),
  (55,'경기도','연천군',38.086858,127.055985,61,138);
-INSERT INTO "nalsiwoori_selection" ("id","state","city","street","cur_wea","pub_date") VALUES (1,'서울시','동작구','대방동','좋음','2020-07-21 02:44:51.725383'),
- (2,'경기도','용인시','수지구','나쁨','2020-07-21 02:44:51.725383'),
- (3,'서울시','관악구','가산동','보통','2020-07-21 02:44:51.725383'),
- (4,'서울특별시','도봉구','','흐림','2020-07-21 02:46:54.964448'),
- (5,'시/도 선택','','','0','2020-07-21 05:40:59.038210');
+
 COMMIT;
