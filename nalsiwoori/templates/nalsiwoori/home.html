@@ -129,20 +129,35 @@
   
           var container = document.getElementById('map'); //지도를 생성할공간
           var options = {
-              center: new kakao.maps.LatLng(33.450701, 126.570667), //중심좌표
-              level: 3
+              center: new kakao.maps.LatLng(37.5579452, 126.9941904), //중심좌표
+              level: 9
           };
   
           var map = new kakao.maps.Map(container, options); //지도생성
+          var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+          var imageSize = new kakao.maps.Size(24, 35); 
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  //마커만들기
+
+          $.ajax({
+            url:'/nalsiwoori/load_map_db/',
+            success:function(res){
+              var positions = new Array();
+
+              for(var i=0;i<res.length;i++){
+                var data_lat = res[i].lat;
+                var data_lng = res[i].lng;
+                positions.push(new kakao.maps.LatLng(data_lat, data_lng));
+
+                var customOverlay = new kakao.maps.CustomOverlay({
+                  position: positions[i],
+                  content: `<div class ="label"><span class="left"></span><span class="center">${res[i].city}</span><span class="right"></span></div>`   
+                });
+                customOverlay.setMap(map);
+              }
+            }
+          })
           
-          var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); //마커표시 위치 -> 딕셔너리로 수정예정
-  
-          // 마커를 생성
-          var marker = new kakao.maps.Marker({
-              position: markerPosition
-          });
-          
-          marker.setMap(map);
+
       </script>
 
     <br/>
