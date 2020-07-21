@@ -55,15 +55,15 @@ def home(request):
     # return HttpResponse(html)
 
 def log_wea(request):
+
     state = request.GET.get('state1')
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
-    sel = Selection(state=state, city=city, street='', cur_wea=cur_wea, pub_date=timezone.now())
+    sel = Selection(map_idx=0, map_data_id=1,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
     sel.save()
-
-    return JsonResponse({'result':'날씨가 입력되었습니다.'})
-    # return HttpResponse(html)
+    # dict1 = {'result':'입력성공','data':state}
+    return HttpResponse(state)
 
 def load_map_db(request):
     map_datas = map_data.objects.all()
