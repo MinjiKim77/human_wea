@@ -45,7 +45,7 @@ def course(request):
     return render(request, 'nalsiwoori/course.html')
 
 def home(request):
-    sel_list = Selection.objects.order_by('-pub_date')[:10]
+    sel_list = Selection.objects.order_by('-pub_date')[:20]
     # sel_list = Selection.objects.all()
     html = ''
 
@@ -71,3 +71,6 @@ def load_map_db(request):
     for data in map_datas:
         json_data.append(model_to_dict(data))
     return JsonResponse(json_data, safe=False)
+    
+def zzzz(request):
+    return 
