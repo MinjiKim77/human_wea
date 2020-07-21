@@ -33,7 +33,7 @@ def course(request):
     return render(request, 'nalsiwoori/course.html')
 
 def home(request):
-    sel_list = Selection.objects.order_by('-pub_date')[:10]
+    sel_list = Selection.objects.order_by('-pub_date')[:20]
     # sel_list = Selection.objects.all()
     html = ''
 
@@ -52,3 +52,5 @@ def log_wea(request):
 
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
+def zzzz(request):
+    return 
