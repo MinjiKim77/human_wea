@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>날씨우리</title>
     <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel= "stylesheet" type="text/css" href="login.css">
+    <link rel= "stylesheet" type="text/css" href="/static/nalsiwoori/css/login.css">
 
 
 </head>
@@ -27,19 +27,19 @@
                 <h1>로그인해주세요</h1>
                 
                 <form action="/" method="post">
-                
-                <div class="field-wrap">
+
+                    <div class="field-wrap">
+                        
+                        <input name="user_email" value='' id="user_email" placeholder="E-mail을 입력해주세요" type="text"/>
+                    </div>
                     
-                    <input name="user_id" value='' id="user_email" placeholder="E-mail을 입력해주세요" type="text"/>
-                </div>
-                
-                <div class="field-wrap">
-                    <input name="user_pwd" value='' id="user_pwd" placeholder="비밀번호" type="password" />
-                </div>
-                
-                <p class="forgot"><a href="#">ID/PW찾기</a></p>
-                
-                <button class="button button-block"/><a href = "/index.html">로그인하기</a></button>
+                    <div class="field-wrap">
+                        <input name="user_pw" value='' id="user_pw" placeholder="비밀번호" type="password" />
+                    </div>
+                    
+                    <p class="forgot"><a href="#">ID/PW찾기</a></p>
+                    
+                    <button type = "submit" class="button button-block"/><a href = "/index.html">로그인하기</a></button>
                 
                 
                 </form>
@@ -67,7 +67,7 @@
                         </div>
                 
                         <div class="field-wrap">
-                            <input name="user_pwd" value='' id="user_pwd" placeholder="비밀번호를 설정해주세요" type="text" />
+                            <input name="user_pw" value='' id="user_pw" placeholder="비밀번호를 설정해주세요" type="password" />
                         </div>
                 
                     <button type="submit" class="button button-block"/><a href="#login">가입하기</a></button>
