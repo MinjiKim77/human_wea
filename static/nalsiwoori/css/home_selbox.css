@@ -72,17 +72,17 @@ button{
     background-color:#C0392B;
   }
 
-  /* .container{
-    margin:100px;
-  } */
-
   .container{
-    /* width: 380px; */
-    margin: 0 auto;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
+    margin:100px;
   }
+/* 
+  .container{
+    width: 380px;
+    margin: auto;
+    height: 50px;
+    line-height: 50px;
+    text-align: left;
+  } */
 
 
   select:focus, select:active {
