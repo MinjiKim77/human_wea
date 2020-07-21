@@ -36,6 +36,6 @@ def log_wea(request):
 
     sel = Selection(state=state, city=city, street='', cur_wea=cur_wea, pub_date=timezone.now())
     sel.save()
-
+//
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
