@@ -72,12 +72,12 @@ button{
     background-color:#C0392B;
   }
 
-  .container{
+  /* .container{
     margin:100px;
-  }
+  } */
 
-  .container p{
-    width: 380px;
+  .container{
+    /* width: 380px; */
     margin: 0 auto;
     height: 100px;
     line-height: 100px;
