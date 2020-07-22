@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <title>nalsiwoori</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css"></style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <meta charset="utf-8">
@@ -9,24 +10,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <link rel= "stylesheet" type="text/css" href="/static/nalsiwoori/css/home_selbox.css">
+    <link rel= "stylesheet" type="text/css" href="/static/nalsiwoori/css/weather.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- 셀렉트 박스 정렬 style -->
+    <title>지역별 날씨</title>
     <style>
-      .input_list { display: table; margin-left: 20px; margin-right: auto; }
+        .weather_list { display: table; margin-left: auto; margin-right: 0; }
     </style>
 </head>
 <body>
-  <!-- 예전 nav -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand" href="http://localhost:8000/home">Home</a>
         <ul class="navbar-nav">
-          <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="http://localhost:8000/weather">지역별 날씨</a>
-          </li>
+        </li>
           <li class="nav-item">
             <a class="nav-link" href="http://localhost:8000/course">관광/데이트코스</a>
           </li>
@@ -36,72 +35,103 @@
           <li class="nav-item">
             <a class="nav-link" href="http://localhost:8000/logout">로그아웃</a>
           </li>
-      
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-              미구현
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">미구현1</a>
-              <a class="dropdown-item" href="#">미구현2</a>
-              <a class="dropdown-item" href="#">미구현3</a>
-            </div>
-          </li> -->
         </ul>
       </nav>
-      <br>
-      <div id="home_title"><h1>Human Weatherforecast</h1><br>
-        <!-- <p>버튼님이 가운데로 오셨습니다.</p> -->
-      </div>    
-        <!-- 시군구 셀렉트 박스 class 설정 후 css 수정 -->
-        <div class="input_list">
-          <select class="selector" name="state1" id="state1" value="state"></select>
-          <select class="selector" name="city1" id="city1" value="city"></select>
-          <select class="selector" name="cur_wea" id = "cur_wea" value="cur_wea">
-            <option value = "0">날씨 선택</option>
-            <option value = "맑음">맑음</option>
-            <option value = "흐림">흐림</option>
-            <option value = "비">비</option>
-            <option value = "눈">눈</option>
-            <option value = "우박">우박</option>
-            <option value = "천둥">천둥</option>
-          </select>
-          <button class="buttoner" id = "result">실시간 날씨 입력</button>
-          <br>
+    <section>
+        <!-- 아래는 test 코드 -->
+        <!-- <div id='aaa'></div> -->
+        <h1 id="log_table_title">실시간 지역별 날씨</h1>
+        <div class="weather_list">
+            <select class="selector" name="state1" id="state1" value="state"></select>
+            <select class="selector" name="city1" id="city1" value="city"></select>
+            <button class="buttoner" id = "result">검색</button>
+        </div><br>
+        <div class="tbl-header">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+              <tr>
+                  <td>도시</td>
+                  <td>지역구</td>
+                  <td>현재 날씨</td>
+                  <td>등록 시간</td>
+              </tr>
+            </thead>
+          </table>
         </div>
-        <script>
+        <div class="tbl-content">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+              {% for item in list %}
+              <tr>
+                  <td>{{ item.state }}</td>
+                  <td>{{ item.city }}</td>
+                  <td>{{ item.cur_wea }}</td>
+                  <td>{{ item.pub_date }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <script>
+
           $('#result').click(function(){
-            $.ajax({
-              url: '/log_wea/',
-              type: 'get',
-              data: {
-                'state1': $('[name=state1]').val(),
-                'city1': $('[name=city1]').val(),
-                'cur_wea': $('[name=cur_wea]').val(),
-              },
-              success: function(res) {
-                // alert(res)
-                // $('#aaa').html(res);
-                location.reload();
-              }
-            })
+            si=$('[id=state1]').val()
+            gu=$('[id=city1]').val()
+            location = `/weather/?si=${si}&gu=${gu}`
           })
+        // $('#result').click(function(){
+        //     $.ajax({
+        //         url: '/sel_wea/',
+        //         type: 'get',
+        //         data: {
+        //             'si': $('[name=state1]').val(),
+        //             'gu': $('[name=city1]').val(),
+        //         },
+        //         success: function(state, city) {
+        //         // alert(res)
+        //         // $('#aaa').html(res);
+        //         location = `/weather/?si=${state}&gu=${city}`
+        //       }
+        //     })  
+        // })
+                // $('[id=result]').click(function(){
+        // $.ajax({
+        //     type : 'post',
+        //     url : 'sel_wea/',
+        //     data : {
+        //         'si' : $('[id=stata1]').val(),
+        //         'gu': $('[id=city1]').val()
+        //     },
+        //     success: function(res){
+        //         si = {{ wea.si }}
+        //         gu = {{ wea.gu }}
+        //         if(res ==0){location.href= `/weather/?si=${si}&gu=${gu}`}
+                
+        //     },
+
+
+        //     })
+            
+        // });
+            
+        //   $.ajax({
+        //     url: '/sel_wea/',
+        //     type: 'get',
+        //     data: {
+        //       'state1': $('[name=state1]').val(),
+        //       'city1': $('[name=city1]').val()
+        //     },
+        //     success: function(res) {
+        //       // alert(res)
+        //       // $('#aaa').html(res);
+        //       location.reload();
+        //     }
+        //   })
         </script>
-        <!-- <div class="container">
-          <div class="panel panel-default">
-            <div class="panel-heading">실시간 온도</div>
-            <div class="panel-body">Panel Content</div>
-          </div>
-        </div>
-        <div class="container">
-            <div class="panel panel-default">
-            <div class="panel-heading">실시간 날씨</div>
-            <div class="panel-body">Panel Content</div>
-          </div>
-        </div> -->
-        
-      <!-- 지역 선택하는 select 하드코딩__DB연동 후 수정 예정 -->
-        <script>
+
+      
+       <script>
         $('document').ready(function() {
           var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
           var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
@@ -145,87 +175,6 @@
           }
         });
       });
-      </script><br>
-      <div id="map" style="width:800px;height:400px; margin-left: 20px; margin-right: auto;"></div>
-      <script type="text/javascript"
-          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
-      <script>
-  
-          var container = document.getElementById('map'); //지도를 생성할공간
-          var options = {
-              center: new kakao.maps.LatLng(37.5579452, 126.9941904), //중심좌표
-              level: 9
-          };
-  
-          var map = new kakao.maps.Map(container, options); //지도생성
-          var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-          var imageSize = new kakao.maps.Size(24, 35); 
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  //마커만들기
-
-          $.ajax({
-            url:'/nalsiwoori/load_map_db/',
-            success:function(res){
-              var positions = new Array();
-
-              for(var i=0;i<res.length;i++){
-                var data_lat = res[i].lat;
-                var data_lng = res[i].lng;
-                positions.push(new kakao.maps.LatLng(data_lat, data_lng));
-
-                var customOverlay = new kakao.maps.CustomOverlay({
-                  position: positions[i],
-                  // div class label > kakao_label로 수정
-                  content: `<div class ="kakao_label><span class="left"></span><span class="center">${res[i].city}</span><span class="right"></span></div>`   
-                });
-                customOverlay.setMap(map);
-              }
-            }
-          })
       </script>
-    <script>
-    $(window).on("load resize ", function() {
-    var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-    $('.tbl-header').css({'padding-right':scrollWidth});
-    }).resize();
-    </script>
-    <script>
-    $(window).on("load resize ", function() {
-      var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-      $('.tbl-header').css({'padding-right':scrollWidth});
-    }).resize();
-    </script>
-    <section>
-      <!-- 아래는 test 코드 -->
-      <!-- <div id='aaa'></div> -->
-      <h1 id="log_table_title">실시간 지역별 날씨</h1>
-      <div class="tbl-header">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <thead>
-            <tr>
-                <td>도시</td>
-                <td>지역구</td>
-                <td>현재 날씨</td>
-                <td>등록 시간</td>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div class="tbl-content">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tbody>
-            {% for item in list %}
-            <tr>
-                <td>{{ item.state }}</td>
-                <td>{{ item.city }}</td>
-                <td>{{ item.cur_wea }}</td>
-                <td>{{ item.pub_date }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </section>
-    <div class="Copyright">
-      <a target="_blank" href="">Copyright. nalsiwoori_team</a>
-    </div>
 </body>
+</html>
