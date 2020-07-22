@@ -3,42 +3,44 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonRespons
 from django.urls import reverse
 from .models import *
 from django.utils import timezone
-
+from django.contrib.auth.models import User
+from django.contrib import auth
 
 def index(request):
     return render(request, 'nalsiwoori/home.html')
 
 def login(request):
     if request.method == 'POST':
-        user_email = request.POST.get('user_email')
-        user_pw = request.POST.get('user_pw')
-        request.session ['user_email']='user_email'
-        return HttpResponseRedirect("/home/")
-    return render(request, 'nalsiwoori/login.html')
+        email = request.POST.get('user_email')
+        password = request.POST.get('user_pw1')
+        user = auth.authenticate(request, email=email , password = password)
+        if user is not None:
+            auth.login(request, user)
+            return HttpResponseRedirect("/home/")
+        else:
+            return render(request, 'nalsiwoori/login.html',{'이메일이나 비밀번호가 맞지 않습니다'})
+    else:
+        return render(request, 'nalsiwoori/login.html')
 
 
 def signup(request):
     if request.method == 'POST':
-        user_nick = request.POST.get('user_nick')
-        user_email = request.POST.get('user_email')
-        user_name = request.POST.get('user_name')
-        user_pw = request.POST.get('user_pw')
-    #re_password = request.POST['re-password']
-
-        user = Users()
-        user.user_email = user_email,
-        user.user_pw = user_pw,
-        user.user_nick = user_nick,
-        user.user_name = user_name    
-        
-        user.save()
-        return render(request, 'nalsiwoori/login.html')
-    else :
-        pass
+        if request.POST.get('user_pw1') == request.POST.get('user_pw2'):
+            user = User.objects.create_user(
+                username = request.POST.get('user_name'),
+                usernick = request.POST.get('user_nick'),
+                email =request.POST.get('user_email'),
+                password= request.POST.get('user_pw1')
+            )
+            auth.login(request,user)
+            return render(request, 'nalsiwoori/login.html')
+        return HttpResponse( '가입완료')    
+    return render(request, 'nalsiwoori/login.html') 
+       
 
 
 def logout(request):
-    pass
+    return render(request, 'nalsiwoori/logout.html')
 
 def course(request):
     return render(request, 'nalsiwoori/course.html')
