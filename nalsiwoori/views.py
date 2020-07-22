@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import *
 from django.utils import timezone
 from django.db.models import Q
+from django.forms.models import model_to_dict
 from django.contrib.auth.hashers import check_password
 
 def index(request):
@@ -116,3 +117,10 @@ def log_wea(request):
 
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
+
+def load_map_db(request):
+    map_datas = map_data.objects.all()
+    json_data = []
+    for data in map_datas:
+        json_data.append(model_to_dict(data))
+    return JsonResponse(json_data, safe=False)
