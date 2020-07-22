@@ -97,11 +97,25 @@ def home(request):
     # return HttpResponse(html)
 
 def log_wea(request):
+
     state = request.GET.get('state1')
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
+<<<<<<< HEAD
     sel = Selection(state=state, city=city, street='', cur_wea=cur_wea, pub_date=timezone.now())
+=======
+    map_datas = map_data.objects.all()
+    json_data = []
+    for data in map_datas:
+        json_data.append(model_to_dict(data))
+
+    for i in json_data:
+        if(json_data[i].city == city and json_data[i].state==state):
+            map_data_id = json_data[i].id
+
+    sel = Selection(map_idx=0, map_data_id=map_data_id,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
+>>>>>>> 6f6064c97b42e1daeabf673f5a9e711e430f4068
     sel.save()
 
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
