@@ -18,7 +18,16 @@
     <style>
       .input_list { display: table; margin-left: 20px; margin-right: auto; }
     </style>
+
+    <!-- <style>
+      .kakao_label {margin-bottom: 96px;}
+      .kakao_label * {display: inline-block;vertical-align: top;}
+      .kakao_label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
+      .kakao_label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
+      .kakao_label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
+    </style> -->
 </head>
+{% load static %}
 <body>
   <!-- 예전 nav -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -53,6 +62,9 @@
       <br>
       <div id="home_title"><h1>Human Weatherforecast</h1><br>
         <!-- <p>버튼님이 가운데로 오셨습니다.</p> -->
+        <img src='{% static "nalsiwoori/images/맑음.png" %}'>
+        <img src='{% static "nalsiwoori/images/sunny.png" %}'>
+        <!-- 이미지테스트중! -->
       </div>    
         <!-- 시군구 셀렉트 박스 class 설정 후 css 수정 -->
         <div class="input_list">
@@ -176,8 +188,14 @@
                 var customOverlay = new kakao.maps.CustomOverlay({
                   position: positions[i],
                   // div class label > kakao_label로 수정
-                  content: `<div class ="kakao_label><span class="left"></span><span class="center" style="font-weight:bold;color:red;">${res[i].cur_wea}</span><span class="right"></span></div>`   
+                  content: `<div class ="kakao_label id="kakao_label">
+                    <span class="left"></span>
+                    <span class="center" style="font-weight:bold;">
+                    <img src='{% static "nalsiwoori/images/${String(res[i].icon)}.png" %}'>
+                    ${res[i].cur_wea}</span>
+                    <span class="right"></span></div>`   
                 });
+                console.log(res[i].cur_wea)
                 customOverlay.setMap(map);
               }
             }

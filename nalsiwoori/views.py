@@ -157,6 +157,20 @@ def load_map_db(request):
             cur_wea = ''
 
         obj['cur_wea'] = cur_wea
+        
+        if cur_wea == "맑음":
+            obj['icon'] = "sunny"
+        elif cur_wea == "흐림":
+            obj['icon'] = "cloud"
+        elif cur_wea == "비":
+            obj['icon'] = "rain"
+        elif cur_wea == "눈":
+            obj['icon'] = "snow"
+        elif cur_wea == "천둥":
+            obj['icon'] = "thunder"
+        elif cur_wea == "우박":
+            obj['icon'] = "hail"
+
         # print(obj)
         # print(obj.city, cur_wea)
         json_data.append(obj)

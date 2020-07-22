@@ -186,8 +186,57 @@ nav {
 .input_list{
   margin: 10px auto;
 }
-/* kakao overlay css > 작동안되는중 */
-#kakao_label{
-  text-size: 40px;
-  color: rgb(255, 0, 0);
+
+/* .kakao_label {
+	position: relative;
+	background: #d48787;
+	border-radius: .4em;
+}
+
+.kakao_label:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+	border-top-color: #441fca;
+	border-bottom: 0;
+	margin-left: -5px;
+	margin-bottom: -5px;
+} */
+
+.kakao_label {
+	position: relative;
+	background: #ffffff;
+	border: 1px solid #333333;
+}
+.kakao_label:after, .kakao_label:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.kakao_label:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-top-color: #ffffff;
+	border-width: 5px;
+	margin-left: -5px;
+}
+.kakao_label:before {
+	border-color: rgba(51, 51, 51, 0);
+	border-top-color: #333333;
+	border-width: 6px;
+	margin-left: -6px;
+}
+
+.kakao_label img{
+  width: 5px;
+  height: 5px;
 }
