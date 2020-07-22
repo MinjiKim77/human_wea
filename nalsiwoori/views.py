@@ -3,33 +3,61 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonRespons
 from django.urls import reverse
 from .models import *
 from django.utils import timezone
+from django.db.models import Q
+<<<<<<< HEAD
 from django.forms.models import model_to_dict
-
+=======
+>>>>>>> f276bc5b8e051397081e0bdb814de5429fe026a6
+from django.contrib.auth.hashers import check_password
 
 def index(request):
     return render(request, 'nalsiwoori/home.html')
 
 def login(request):
     if request.method == 'POST':
-        user_email = request.POST.get('user_email')
+        user_email= request.POST.get('user_email')
         user_pw = request.POST.get('user_pw')
-        request.session ['user_email']='user_email'
-        return HttpResponseRedirect("/home/")
+
+        res_data={}
+        if not (user_email and user_pw):
+            res_data['error'] ="모든 칸을 다 입력해주세요"
+        else:
+            user = user.objects.get(user_email=user_email)
+            if check_password(user_pw, user_pw):
+                user_pw = request.POST.get('user_pw')
+                request.session['user_email'] ='user_email'
+                return HttpResponseRedirect("/home/")
+            else:
+                res_data['error'] ="아이디나 비밀번호가 틀렸습니다. "
+
+        return render(request, 'nalsiwoori/login.html')
+    #     request.session ['user_email']='user_email'
+    #     return HttpResponseRedirect("/home/")
     return render(request, 'nalsiwoori/login.html')
 
 
 def signup(request):
     if request.method == 'POST':
-        user_nick = request.POST.get('user_nick')
-        user_email = request.POST.get('user_email')
-        user_name = request.POST.get('user_name')
-        user_pw = request.POST.get('user_pw')
-    #re_password = request.POST['re-password']
+        if request.POST.get('user_pw1') == request.POST.get('user_pw2'):
+            user_nick = request.POST.get("user_nick")
+            user_email = request.POST.get("user_email")
+            user_name = request.POST.get("user_name")
+            user_pw = request.POST.get("user_pw1")
+
+            # 1
+            u = Users.objects.filter(Q(user_email=user_email) | Q(user_nick=user_nick))            
+            if u: # 가입되어 있는 경우
+                return HttpResponse('이미 가입되어 있습니다.')
+
+        else :
+            return HttpResponse("비밀번호가 다름")
+
+        # 2
 
         user = Users()
-        user.user_email = user_email,
-        user.user_pw = user_pw,
-        user.user_nick = user_nick,
+        user.user_email = user_email
+        user.user_pw = user_pw
+        user.user_nick = user_nick
         user.user_name = user_name    
         
         user.save()
@@ -39,7 +67,25 @@ def signup(request):
 
 
 def logout(request):
-    pass
+
+    return render(request, 'nalsiwoori/logout.html')
+
+
+def change_pw(request):
+    context= {}
+    if request.method == "POST":
+        new_password = request.POST.get("password1")
+        password_confirm = request.POST.get("password2")
+        if new_password == password_confirm:
+            user.set_password(new_password)
+            user.save()
+            return HttpResponseRedirect("/home/")
+        else:
+            context.update({'error':"새로운 비밀번호를 다시 확인해주세요."})
+    else:
+        context.update({'error':"현재 비밀번호가 일치하지 않습니다."})
+
+    return render(request, "nalsiwoori/changepw.html",context)
 
 def weather(request):
     si = request.GET.get('si')
@@ -60,7 +106,7 @@ def course(request):
     return render(request, 'nalsiwoori/course.html')
 
 def home(request):
-    sel_list = Selection.objects.order_by('-pub_date')[:20]
+    sel_list = Selection.objects.order_by('-pub_date')[:10]
     # sel_list = Selection.objects.all()
     html = ''
 
@@ -70,14 +116,30 @@ def home(request):
     # return HttpResponse(html)
 
 def log_wea(request):
+
     state = request.GET.get('state1')
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
-    sel = Selection(map_idx=0, map_data_id=1,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
+<<<<<<< HEAD
+    sel = Selection(state=state, city=city, street='', cur_wea=cur_wea, pub_date=timezone.now())
+=======
+    map_datas = map_data.objects.all()
+    json_data = []
+    for data in map_datas:
+        json_data.append(model_to_dict(data))
+
+    for i in json_data:
+        if(json_data[i].city == city and json_data[i].state==state):
+            map_data_id = json_data[i].id
+
+    sel = Selection(map_idx=0, map_data_id=map_data_id,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
+>>>>>>> 6f6064c97b42e1daeabf673f5a9e711e430f4068
     sel.save()
-    # dict1 = {'result':'입력성공','data':state}
-    return HttpResponse(state)
+<<<<<<< HEAD
+
+    return JsonResponse({'result':'날씨가 입력되었습니다.'})
+    # return HttpResponse(html)
 
 def sel_wea(request):
     # state = request.GET.get('state1')
@@ -104,6 +166,8 @@ def load_map_db(request):
     for data in map_datas:
         json_data.append(model_to_dict(data))
     return JsonResponse(json_data, safe=False)
-    
-def zzzz(request):
-    return 
+=======
+
+    return JsonResponse({'result':'날씨가 입력되었습니다.'})
+    # return HttpResponse(html)
+>>>>>>> f276bc5b8e051397081e0bdb814de5429fe026a6

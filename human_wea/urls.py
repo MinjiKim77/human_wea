@@ -14,5 +14,5 @@ urlpatterns = [
     path('log_wea/', views.log_wea, name='log_wea'), 
     path('sel_wea/', views.sel_wea, name='sel_wea'), 
     path('nalsiwoori/',include('nalsiwoori.urls')),             
-    path('zzzz/', views.zzzz, name='zzzz'),        
+    # path('zzzz/', views.zzzz, name='zzzz'),        
 ]
