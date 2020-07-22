@@ -11,15 +11,9 @@
     <link rel= "stylesheet" type="text/css" href="/static/nalsiwoori/css/home_selbox.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- 셀렉트 박스 정렬 style -->
-    <style>
-      .input_list { display: table; margin-left: auto; margin-right: auto; }
-    </style>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
 </head>
 <body>
-  <!-- 예전 nav -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand" href="http://localhost:8000/home">Home</a>
         <ul class="navbar-nav">
@@ -27,11 +21,10 @@
             <a class="nav-link" href="http://localhost:8000/course">관광/데이트코스</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://localhost:8000/mypage" >내 정보</a>
+            <a class="nav-link" href="http://localhost:8000/mypage">내 정보</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://localhost:8000/logout">로그아웃</a>
-            
           </li>
       
           <li class="nav-item dropdown">
@@ -47,14 +40,12 @@
         </ul>
       </nav>
       <br>
-      <div id="home_title"><h3>Human Weatherforecast</h3>
-        <p>버튼님이 가운데로 오셨습니다.</p>
-      </div>    
-        <!-- 시군구 셀렉트 박스 class 설정 후 css 수정 -->
-        <div class="input_list">
-          <select class="selector" name="state1" id="state1" value="state"></select>
-          <select class="selector" name="city1" id="city1" value="city"></select>
-          <select class="selector" name="cur_wea" id = "cur_wea" value="cur_wea">
+        <h3>Human Weatherforecast</h3>
+        <p>아 아래 버튼 제발 좀 가운데로 가라고</p>
+        <div class="container">
+          <select name="state1" id="state1" value="state"></select>
+          <select name="city1" id="city1" value="city"></select>
+          <select name="cur_wea" id = "cur_wea" value="cur_wea">
             <option value = "0">날씨 선택</option>
             <option value = "맑음">맑음</option>
             <option value = "흐림">흐림</option>
@@ -63,7 +54,7 @@
             <option value = "우박">우박</option>
             <option value = "천둥">천둥</option>
           </select>
-          <button class="buttoner" id = "result">실시간 날씨 입력</button>
+          <button id = "result">실시간 날씨 입력</button>
           <br>
         </div>
         <script>
@@ -77,14 +68,13 @@
                 'cur_wea': $('[name=cur_wea]').val(),
               },
               success: function(res) {
-                // alert(res)
-                // $('#aaa').html(res);
-                location.reload();
+                alert(res.result)
+                $('.container').html(data);
               }
             })
           })
         </script>
-        <!-- <div class="container">
+        <div class="container">
           <div class="panel panel-default">
             <div class="panel-heading">실시간 온도</div>
             <div class="panel-body">Panel Content</div>
@@ -95,7 +85,7 @@
             <div class="panel-heading">실시간 날씨</div>
             <div class="panel-body">Panel Content</div>
           </div>
-        </div> -->
+        </div>
         
       <!-- 지역 선택하는 select 하드코딩__DB연동 후 수정 예정 -->
         <script>
@@ -133,74 +123,57 @@
             var $city = $(this).next(); // 선택영역 군구 객체
             $("option",$city).remove(); // 구군 초기화
 
-          if(area == "area0")
-            $city.append("<option value=''>구/군 선택</option>");
-          else {
-            $.each(eval(area), function() {
-              $city.append("<option value='"+this+"'>"+this+"</option>");
-            });
-          }
-        });
-      });
-      </script><br>
-      <div id="map" style="width:800px;height:400px;margin: auto;"></div>
-      <script type="text/javascript"
-          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
-      <script>
-  
-          var container = document.getElementById('map'); //지도를 생성할공간
-          var options = {
-              center: new kakao.maps.LatLng(37.5579452, 126.9941904), //중심좌표
-              level: 9
-          };
-  
-          var map = new kakao.maps.Map(container, options); //지도생성
-          var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-          var imageSize = new kakao.maps.Size(24, 35); 
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  //마커만들기
-
-          $.ajax({
-            url:'/nalsiwoori/load_map_db/',
-            success:function(res){
-              var positions = new Array();
-
-              for(var i=0;i<res.length;i++){
-                var data_lat = res[i].lat;
-                var data_lng = res[i].lng;
-                positions.push(new kakao.maps.LatLng(data_lat, data_lng));
-
-                var customOverlay = new kakao.maps.CustomOverlay({
-                  position: positions[i],
-                  content: `<div class ="label"><span class="left"></span><span class="center">${res[i].city}</span><span class="right"></span></div>`   
-                });
-                customOverlay.setMap(map);
-              }
+            if(area == "area0")
+              $city.append("<option value=''>구/군 선택</option>");
+            else {
+              $.each(eval(area), function() {
+                $city.append("<option value='"+this+"'>"+this+"</option>");
+              });
             }
-          })
-      </script>
-    <br/>
+          });
+        });
+        </script>
+        <!-- Kakao API 호출 -->
+        <div id="map" style="width:800px;height:400px;margin: auto;"></div>
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
+        <script>
+    
+            var container = document.getElementById('map'); //지도를 생성할공간
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), //중심좌표
+                level: 3
+            };
+    
+            var map = new kakao.maps.Map(container, options); //지도생성
+            
+            var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); //마커표시 위치 -> 딕셔너리로 수정예정
+    
+            // 마커를 생성
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            
+            marker.setMap(map);
+        </script>
+      <br/>
     <script>
-    $(window).on("load resize ", function() {
-    var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-    $('.tbl-header').css({'padding-right':scrollWidth});
-    }).resize();
-    </script>
-    <script>
+    //log_table JS
     $(window).on("load resize ", function() {
       var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
       $('.tbl-header').css({'padding-right':scrollWidth});
     }).resize();
     </script>
     <section>
-      <!-- 아래는 test 코드 -->
-      <!-- <div id='aaa'></div> -->
-      <h1 id="log_table_title">실시간 지역별 날씨</h1>
+      <h1>실시간 지역별 날씨</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
           <thead>
             <tr>
+                <!-- <td>번호</td> -->
                 <td>도시</td>
                 <td>지역구</td>
+                <!-- <td>동/읍/리</td> -->
                 <td>현재 날씨</td>
                 <td>등록 시간</td>
             </tr>
@@ -212,8 +185,10 @@
           <tbody>
             {% for item in list %}
             <tr>
+                <!-- <td>{{ item.id }}</td> -->
                 <td>{{ item.state }}</td>
                 <td>{{ item.city }}</td>
+                <!-- <td>{{ item.street }}</td> -->
                 <td>{{ item.cur_wea }}</td>
                 <td>{{ item.pub_date }}</td>
             </tr>
@@ -222,7 +197,28 @@
         </table>
       </div>
     </section>
-    <div class="Copyright">
+    <div class="log_table">
       <a target="_blank" href="">Copyright. nalsiwoori_team</a>
     </div>
+<!-- 이전 코드 아래 -->
+    <!-- <table class="table table-dark table-striped">
+        <tr>
+            <td>번호</td>
+            <td>도시</td>
+            <td>지역구</td>
+            <td>동/읍/리</td>
+            <td>현재 날씨</td>
+            <td>등록 시간</td>
+        </tr>
+        {% for item in list %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.state }}</td>
+            <td>{{ item.city }}</td>
+            <td>{{ item.street }}</td>
+            <td>{{ item.cur_wea }}</td>
+            <td>{{ item.pub_date }}</td><br>
+        </tr>
+        {% endfor %}
+    </table> -->
 </body>

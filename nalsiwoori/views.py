@@ -3,44 +3,86 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonRespons
 from django.urls import reverse
 from .models import *
 from django.utils import timezone
-from django.contrib.auth.models import User
-from django.contrib import auth
+from django.db.models import Q
+from django.contrib.auth.hashers import check_password
 
 def index(request):
     return render(request, 'nalsiwoori/home.html')
 
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('user_email')
-        password = request.POST.get('user_pw1')
-        user = auth.authenticate(request, email=email , password = password)
-        if user is not None:
-            auth.login(request, user)
-            return HttpResponseRedirect("/home/")
+        user_email= request.POST.get('user_email')
+        user_pw = request.POST.get('user_pw')
+
+        res_data={}
+        if not (user_email and user_pw):
+            res_data['error'] ="모든 칸을 다 입력해주세요"
         else:
-            return render(request, 'nalsiwoori/login.html',{'이메일이나 비밀번호가 맞지 않습니다'})
-    else:
+            user = user.objects.get(user_email=user_email)
+            if check_password(user_pw, user_pw):
+                user_pw = request.POST.get('user_pw')
+                request.session['user_email'] ='user_email'
+                return HttpResponseRedirect("/home/")
+            else:
+                res_data['error'] ="아이디나 비밀번호가 틀렸습니다. "
+
         return render(request, 'nalsiwoori/login.html')
+    #     request.session ['user_email']='user_email'
+    #     return HttpResponseRedirect("/home/")
+    return render(request, 'nalsiwoori/login.html')
 
 
 def signup(request):
     if request.method == 'POST':
         if request.POST.get('user_pw1') == request.POST.get('user_pw2'):
-            user = User.objects.create_user(
-                username = request.POST.get('user_name'),
-                usernick = request.POST.get('user_nick'),
-                email =request.POST.get('user_email'),
-                password= request.POST.get('user_pw1')
-            )
-            auth.login(request,user)
-            return render(request, 'nalsiwoori/login.html')
-        return HttpResponse( '가입완료')    
-    return render(request, 'nalsiwoori/login.html') 
-       
+            user_nick = request.POST.get('user_nick'),
+            user_email = request.POST.get('user_email'),
+            user_name = request.POST.get('user_name'),
+            user_pw= request.POST.get('user_pw1')
+
+            # 1
+            u = Users.objects.filter(Q(user_email=user_email) | Q(user_nick=user_nick))            
+            if u: # 가입되어 있는 경우
+                return HttpResponse('이미 가입되어 있습니다.')
+
+        else :
+            return HttpResponse("비밀번호가 다름")
+
+        # 2
+
+        user = Users()
+        user.user_email = user_email
+        user.user_pw = user_pw
+        user.user_nick = user_nick
+        user.user_name = user_name    
+        
+        user.save()
+        return render(request, 'nalsiwoori/login.html')
+    else :
+        pass
 
 
 def logout(request):
+
     return render(request, 'nalsiwoori/logout.html')
+
+
+def change_pw(request):
+    context= {}
+    if request.method == "POST":
+        new_password = request.POST.get("password1")
+        password_confirm = request.POST.get("password2")
+        if new_password == password_confirm:
+            user.set_password(new_password)
+            user.save()
+            auth.login(request,user)
+            return HttpResponseRedirect("/home/")
+        else:
+            context.update({'error':"새로운 비밀번호를 다시 확인해주세요."})
+    else:
+        context.update({'error':"현재 비밀번호가 일치하지 않습니다."})
+
+    return render(request, "nalsiwoori/changepw.html",context)
 
 def course(request):
     return render(request, 'nalsiwoori/course.html')

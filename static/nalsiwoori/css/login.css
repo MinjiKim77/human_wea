@@ -116,6 +116,12 @@ textarea {
     position: relative;
     margin-bottom: 40px;
 }
+.message_error
+{
+    border-color: #EED3D7;
+    color: #B94A48;
+    background-color: #F2DEDE;
+}
 .top-row:after {
     content: "";
     display: table;
