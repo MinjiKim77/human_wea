@@ -118,9 +118,8 @@ def log_wea(request):
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
-    sel = Selection(state=state, city=city, street='', cur_wea=cur_wea, pub_date=timezone.now())
+    sel = Selection(map_idx=0, map_data_id=map_data_id,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
     sel.save()
-
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
 
@@ -149,3 +148,5 @@ def load_map_db(request):
     for data in map_datas:
         json_data.append(model_to_dict(data))
     return JsonResponse(json_data, safe=False)
+    # return JsonResponse({'result':'날씨가 입력되었습니다.'})
+
