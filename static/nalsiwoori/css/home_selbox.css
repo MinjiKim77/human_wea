@@ -181,3 +181,8 @@ nav {
   text-emphasis: active;
   font-size: 25px;
 }
+/* kakao overlay css > 작동안되는중 */
+#kakao_label{
+  text-size: 40px;
+  color: rgb(255, 0, 0);
+}
