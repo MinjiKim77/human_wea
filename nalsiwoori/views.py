@@ -35,10 +35,10 @@ def login(request):
 def signup(request):
     if request.method == 'POST':
         if request.POST.get('user_pw1') == request.POST.get('user_pw2'):
-            user_nick = request.POST.get('user_nick'),
-            user_email = request.POST.get('user_email'),
-            user_name = request.POST.get('user_name'),
-            user_pw= request.POST.get('user_pw1')
+            user_nick = request.POST.get("user_nick")
+            user_email = request.POST.get("user_email")
+            user_name = request.POST.get("user_name")
+            user_pw = request.POST.get("user_pw1")
 
             # 1
             u = Users.objects.filter(Q(user_email=user_email) | Q(user_nick=user_nick))            
@@ -75,7 +75,6 @@ def change_pw(request):
         if new_password == password_confirm:
             user.set_password(new_password)
             user.save()
-            auth.login(request,user)
             return HttpResponseRedirect("/home/")
         else:
             context.update({'error':"새로운 비밀번호를 다시 확인해주세요."})
