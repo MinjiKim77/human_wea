@@ -84,6 +84,21 @@ def change_pw(request):
 
     return render(request, "nalsiwoori/changepw.html",context)
 
+def weather(request):
+    si = request.GET.get('si')
+    gu = request.GET.get('gu')
+    
+    if si and gu:
+        sel_list = Selection.objects.filter(state=si, city=gu).order_by('-pub_date')[:20]
+    else:
+        sel_list = Selection.objects.order_by('-pub_date')[:20]
+    # sel_list = Selection.objects.all()
+    html = ''
+
+    for s in sel_list:
+        html += s.state + '<br>'
+    return render(request, 'nalsiwoori/weather.html',{'list': sel_list})
+    
 def course(request):
     return render(request, 'nalsiwoori/course.html')
 
@@ -110,6 +125,25 @@ def log_wea(request):
 
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
+
+def sel_wea(request):
+    # state = request.GET.get('state1')
+    # city = request.GET.get('city1')
+    # state = request.GET.get('si')
+    # city = request.GET.get('gu')
+
+    
+    # request.session['wea']['si']=si
+    # request.session['wea']['gu']=gu
+    
+    # dict1 = {'result':'입력성공','data':state}
+    # return render(request, 'nalsiwoori/weather.html',{'state':state, 'city'})
+    state = request.GET.get('si')
+    city = request.GET.get('gu')
+   
+
+    # return render(request,{"state":state,"city":city} )
+    return render(request, [state, city] )
 
 def load_map_db(request):
     map_datas = map_data.objects.all()
