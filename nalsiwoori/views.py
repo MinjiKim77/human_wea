@@ -4,10 +4,7 @@ from django.urls import reverse
 from .models import *
 from django.utils import timezone
 from django.db.models import Q
-<<<<<<< HEAD
 from django.forms.models import model_to_dict
-=======
->>>>>>> f276bc5b8e051397081e0bdb814de5429fe026a6
 from django.contrib.auth.hashers import check_password
 
 def index(request):
@@ -106,22 +103,10 @@ def log_wea(request):
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
-<<<<<<< HEAD
-    sel = Selection(state=state, city=city, street='', cur_wea=cur_wea, pub_date=timezone.now())
-=======
-    map_datas = map_data.objects.all()
-    json_data = []
-    for data in map_datas:
-        json_data.append(model_to_dict(data))
+    md = map_data.objects.get(state=state, city=city)
 
-    for i in json_data:
-        if(json_data[i].city == city and json_data[i].state==state):
-            map_data_id = json_data[i].id
-
-    sel = Selection(map_idx=0, map_data_id=map_data_id,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
->>>>>>> 6f6064c97b42e1daeabf673f5a9e711e430f4068
+    sel = Selection(map_idx=0, map_data=md, user_data_id=1, state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
     sel.save()
-<<<<<<< HEAD
 
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
@@ -130,10 +115,16 @@ def load_map_db(request):
     map_datas = map_data.objects.all()
     json_data = []
     for data in map_datas:
-        json_data.append(model_to_dict(data))
-    return JsonResponse(json_data, safe=False)
-=======
+        obj = model_to_dict(data)
+        try:
+            # cur_wea = data.selection_set.all().order_by('-pub_date')[:1][0].cur_wea
+            cur_wea = data.selection_set.all().order_by('-pub_date')[:][0].cur_wea
+        except:
+            cur_wea = ''
 
-    return JsonResponse({'result':'날씨가 입력되었습니다.'})
-    # return HttpResponse(html)
->>>>>>> f276bc5b8e051397081e0bdb814de5429fe026a6
+        obj['cur_wea'] = cur_wea
+        # print(obj)
+        # print(obj.city, cur_wea)
+        json_data.append(obj)
+
+    return JsonResponse(json_data, safe=False)

@@ -173,7 +173,7 @@
                 var customOverlay = new kakao.maps.CustomOverlay({
                   position: positions[i],
                   // div class label > kakao_label로 수정
-                  content: `<div class ="kakao_label><span class="left"></span><span class="center">${res[i].city}</span><span class="right"></span></div>`   
+                  content: `<div class ="kakao_label><span class="left"></span><span class="center" style="font-weight:bold;color:red;">${res[i].cur_wea}</span><span class="right"></span></div>`   
                 });
                 customOverlay.setMap(map);
               }
