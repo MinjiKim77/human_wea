@@ -149,7 +149,7 @@
           var get_lng
 
           $.ajax({
-            url:'/nalsiwoori/load_sel_db/',
+            url:'/load_sel_db/',
             async:false,
             success:function(res){
               get_state = res[res.length - 1].state
@@ -168,7 +168,7 @@
             })
 
           $.ajax({
-            url:'/nalsiwoori/load_map_db/',
+            url:'/load_map_db/',
             async:false,
             success:function(res){
               var positions = new Array();
