@@ -172,15 +172,32 @@ def load_map_db(request):
             obj['icon'] = "hail"
 
         
-        print(obj)
+        # print(obj)
         # print(obj.city, cur_wea)
         json_data.append(obj)
 
     return JsonResponse(json_data, safe=False)
 
 
-# def recentSelect(request):
-#     # temp = map_data.objects.values_list('state','city','lat','lng').last()
-#     recentSel = Selection.objects.select_related('map_data').values_list('state','city','map_data_id__lat','map_data__lng').last()
-#     # recentSel = model_to_dict(temp)
-#     return render(request, 'nalsiwoori/home.html',{'recentSel':recentSel})
+def load_sel_db(request):
+    # sel_datas = Selection.objects.all().select_related('map_data').values_list('state','city','map_data_id__lat','map_data_id__lng')
+    # temp = map_data.objects.all()  # map_data 모두 조회
+    # sel_datas = []
+    # for data in temp:
+    #     selections = data.selection_set.order_by('-pub_date')
+    #     if selections:
+    #         sel = data.selection_set.order_by('-pub_date')[:1][0]
+    #         obj = model_to_dict(data)
+    #         obj['cur_wea'] = sel.cur_wea
+    #         sel_datas.append(obj)
+
+    temp = Selection.objects.all().select_related('map_data')
+    sel_datas = []
+    for data in temp:
+        obj = model_to_dict(data)
+        obj['lat'] = data.map_data.lat
+        obj['lng'] = data.map_data.lng
+        sel_datas.append(obj)
+        # print(obj)
+
+    return JsonResponse(sel_datas, safe=False)

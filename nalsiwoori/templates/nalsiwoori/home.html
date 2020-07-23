@@ -172,8 +172,25 @@
           var imageSize = new kakao.maps.Size(24, 35); 
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  //마커만들기
 
+          var get_state
+          var get_city
           var get_lat
           var get_lng
+
+          $.ajax({
+            url:'/nalsiwoori/load_sel_db/',
+            async:false,
+            success:function(res){
+              get_state = res[res.length - 1].state
+              get_city = res[res.length - 1].city
+              get_lat = res[res.length - 1].lat
+              get_lng = res[res.length - 1].lng
+
+              var moveLatLon = new kakao.maps.LatLng(get_lat, get_lng);
+              map.panTo(moveLatLon); 
+
+              }
+            })
 
           $.ajax({
             url:'/nalsiwoori/load_map_db/',
@@ -199,9 +216,7 @@
           
                 customOverlay.setMap(map);
               }
-              get_lat = res[res.length - 1].lat
-              get_lng = res[res.length - 1].lng
-              console.log(get_lat,get_lng)
+
             }
           })
 
@@ -211,8 +226,13 @@
               method : 'GET',
               success :  (data)=> {
                 var temp = String((data.main.temp - 272)).substring(0,3); // 온도
-                var location = data.name; // 지역이름 
-                $('#chatLog').append('지역 ：' + location + ' 온도　：' + temp　+ "도입니다. "+'\n'); 
+
+                // var content = get_state+" "+get_city+"\n"+temp+"도"
+
+                var content =`${get_state} ${get_city} ${temp}도`
+
+                // $('#chatLog').append('지역 ：' + location + ' 온도　：' + temp　+ "도입니다."+'\n'+"도시: "+get_state+"구: "+get_city+'\n'); 
+                $('#chatLog').append(content); 
                 var imgURL = "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png"; // 아이콘 가져오기
                 $('#img').attr("src", imgURL);// 아이콘 표시
               }
