@@ -11,3 +11,4 @@ urlpatterns = [
     path('sel_wea/', views.sel_wea, name='sel_wea'),
     path('load_sel_db/', views.load_sel_db, name='load_sel_db'),
 ]
+
