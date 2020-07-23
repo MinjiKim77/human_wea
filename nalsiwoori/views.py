@@ -171,8 +171,16 @@ def load_map_db(request):
         elif cur_wea == "우박":
             obj['icon'] = "hail"
 
-        # print(obj)
+        
+        print(obj)
         # print(obj.city, cur_wea)
         json_data.append(obj)
 
     return JsonResponse(json_data, safe=False)
+
+
+# def recentSelect(request):
+#     # temp = map_data.objects.values_list('state','city','lat','lng').last()
+#     recentSel = Selection.objects.select_related('map_data').values_list('state','city','map_data_id__lat','map_data__lng').last()
+#     # recentSel = model_to_dict(temp)
+#     return render(request, 'nalsiwoori/home.html',{'recentSel':recentSel})
