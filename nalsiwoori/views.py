@@ -39,8 +39,11 @@ def log_wea(request):
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
-    sel = Selection(map_idx=0, map_data_id=1,user_data_id=1,state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
+    md = map_data.objects.get(state=state, city=city)
+
+    sel = Selection(map_idx=0, map_data=md, user_data_id=1, state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
     sel.save()
+
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
 
@@ -67,7 +70,55 @@ def load_map_db(request):
     map_datas = map_data.objects.all()
     json_data = []
     for data in map_datas:
-        json_data.append(model_to_dict(data))
-    return JsonResponse(json_data, safe=False)
-    # return JsonResponse({'result':'날씨가 입력되었습니다.'})
+        obj = model_to_dict(data)
+        try:
+            # cur_wea = data.selection_set.all().order_by('-pub_date')[:1][0].cur_wea
+            cur_wea = data.selection_set.all().order_by('-pub_date')[:][0].cur_wea
+        except:
+            cur_wea = ''
 
+        obj['cur_wea'] = cur_wea
+        
+        if cur_wea == "맑음":
+            obj['icon'] = "sunny"
+        elif cur_wea == "흐림":
+            obj['icon'] = "cloud"
+        elif cur_wea == "비":
+            obj['icon'] = "rain"
+        elif cur_wea == "눈":
+            obj['icon'] = "snow"
+        elif cur_wea == "천둥":
+            obj['icon'] = "thunder"
+        elif cur_wea == "우박":
+            obj['icon'] = "hail"
+
+        
+        # print(obj)
+        # print(obj.city, cur_wea)
+        json_data.append(obj)
+
+    return JsonResponse(json_data, safe=False)
+
+
+def load_sel_db(request):
+    # sel_datas = Selection.objects.all().select_related('map_data').values_list('state','city','map_data_id__lat','map_data_id__lng')
+    # temp = map_data.objects.all()  # map_data 모두 조회
+    # sel_datas = []
+    # for data in temp:
+    #     selections = data.selection_set.order_by('-pub_date')
+    #     if selections:
+    #         sel = data.selection_set.order_by('-pub_date')[:1][0]
+    #         obj = model_to_dict(data)
+    #         obj['cur_wea'] = sel.cur_wea
+    #         sel_datas.append(obj)
+
+    temp = Selection.objects.all().select_related('map_data')
+    sel_datas = []
+    for data in temp:
+        obj = model_to_dict(data)
+        obj['lat'] = data.map_data.lat
+        obj['lng'] = data.map_data.lng
+        sel_datas.append(obj)
+        # print(obj)
+
+    return JsonResponse(sel_datas, safe=False)

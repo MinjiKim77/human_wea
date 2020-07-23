@@ -18,7 +18,9 @@
     <style>
       .input_list { display: table; margin-left: 20px; margin-right: auto; }
     </style>
+
 </head>
+{% load static %}
 <body>
   <!-- 예전 nav -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -38,6 +40,7 @@
       <br>
       <div id="home_title"><h1>Human Weatherforecast</h1><br>
         <!-- <p>버튼님이 가운데로 오셨습니다.</p> -->
+        <!-- 이미지테스트중! -->
       </div>    
         <!-- 시군구 셀렉트 박스 class 설정 후 css 수정 -->
         <div class="input_list">
@@ -118,6 +121,12 @@
         });
       });
       </script><br>
+
+      <div>
+        <div id="chatLog" class="chat_log" readonly></div>
+        <img src="" id="img"></img>
+      </div>
+
       <div id="map" style="width:800px;height:400px; margin-left: 20px; margin-right: auto;"></div>
       <script type="text/javascript"
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
@@ -126,7 +135,7 @@
           var container = document.getElementById('map'); //지도를 생성할공간
           var options = {
               center: new kakao.maps.LatLng(37.5579452, 126.9941904), //중심좌표
-              level: 9
+              level: 7
           };
   
           var map = new kakao.maps.Map(container, options); //지도생성
@@ -134,8 +143,33 @@
           var imageSize = new kakao.maps.Size(24, 35); 
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  //마커만들기
 
+          var get_state
+          var get_city
+          var get_lat
+          var get_lng
+
+          $.ajax({
+            url:'/nalsiwoori/load_sel_db/',
+            async:false,
+            success:function(res){
+              get_state = res[res.length - 1].state
+              get_city = res[res.length - 1].city
+              get_lat = res[res.length - 1].lat
+              get_lng = res[res.length - 1].lng
+
+              var moveLatLon = new kakao.maps.LatLng(get_lat, get_lng);
+              map.panTo(moveLatLon);
+              // 지도를 1레벨 내립니다 (지도가 확대됩니다)
+              map.setLevel(5);
+              // // 지도 레벨을 표시합니다
+              displayLevel();
+              
+              }
+            })
+
           $.ajax({
             url:'/nalsiwoori/load_map_db/',
+            async:false,
             success:function(res){
               var positions = new Array();
 
@@ -147,13 +181,41 @@
                 var customOverlay = new kakao.maps.CustomOverlay({
                   position: positions[i],
                   // div class label > kakao_label로 수정
-                  content: `<div class ="kakao_label><span class="left"></span><span class="center">${res[i].city}</span><span class="right"></span></div>`   
+                  content: `<div class ="kakao_label id="kakao_label">
+                    <span class="left"></span>
+                    <span class="center" style="font-weight:bold;">
+                    <img src="/static/nalsiwoori/images/${res[i].icon}.png">
+                    ${res[i].cur_wea}</span>
+                    <span class="right"></span></div>`   
                 });
+          
                 customOverlay.setMap(map);
               }
+
             }
           })
+
+          var apiURL ="http://api.openweathermap.org/data/2.5/weather?lat="+get_lat+"&lon="+get_lng+"&APPID=fc18ef09fcded366103c4fb33b0d2b3b&units=metri";  
+            $.ajax({
+              url : apiURL,
+              method : 'GET',
+              success :  (data)=> {
+                var temp = String((data.main.temp - 272)).substring(0,3); // 온도
+
+                // var content = get_state+" "+get_city+"\n"+temp+"도"
+
+                var content =`${get_state} ${get_city} ${temp}도`
+
+                // $('#chatLog').append('지역 ：' + location + ' 온도　：' + temp　+ "도입니다."+'\n'+"도시: "+get_state+"구: "+get_city+'\n'); 
+                $('#chatLog').append(content); 
+                var imgURL = "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png"; // 아이콘 가져오기
+                $('#img').attr("src", imgURL);// 아이콘 표시
+              }
+            });  
+            
       </script>
+
+
     <script>
     $(window).on("load resize ", function() {
     var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
@@ -200,4 +262,5 @@
     <div class="Copyright">
       <a target="_blank" href="">Copyright. nalsiwoori_team</a>
     </div>
+
 </body>
