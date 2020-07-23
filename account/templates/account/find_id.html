@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <style>
+        .section { position: absolute; left: 50%; transform: translateX(-50%); }
+    </style>
+    <form>
+      {% csrf_token %}
+        <section class="section">
+          <div class="field">
+            <label class="label">name</label>
+            <div class="control has-icons-right">
+              <input class="input" type="text" id = "find_id_name">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-right">
+              <input class="input" type="text" id = "find_id_email">
+            </div>
+          </div>
+          <div class="has-text-centered">
+            <button id="find_id_btn">Find ID!</button>
+          </div>
+        </section>
+      </div>
+    </form>
+    
+  </body>
+</html>
+<script>
+  $('[id = find_id_btn]').click(() => {
+  $.ajax({
+      type : 'post',
+      url : '/find_id_function/',
+      data : {
+          'find_id_name' : $('[id = find_id_name]').val(),
+          'find_id_email' : $('[id = find_id_email]').val(),   
+          'csrfmiddlewaretoken' : $("[name = csrfmiddlewaretoken]").val()
+      },
+      success: function(res){
+        if(res.result) {
+          alert("입력하신 닉네임 또는 이메일이 올바르지 않습니다.")
+        } else {
+          if(confirm("ID는" + res.user_id + "입니다."))   
+            {location.href = "/"}
+          else  
+	          return false;
+        }
+      },
+    }); 
+  })
+</script>
+</body>
+</html>

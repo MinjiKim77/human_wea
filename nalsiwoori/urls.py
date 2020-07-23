@@ -2,7 +2,11 @@ from django.contrib import admin
 from django.urls import path
 from .import views
 
+app_name = 'nalsiwoori'
 urlpatterns = [
     path('load_map_db/', views.load_map_db, name='load_map_db'),
+    path('home/', views.home, name='home'),
+    path('weather/', views.weather, name='weather'),
     path('log_wea/', views.log_wea, name='log_wea'),
+    path('sel_wea/', views.sel_wea, name='sel_wea'), 
 ]

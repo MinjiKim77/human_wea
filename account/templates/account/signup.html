@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <style>
+        .section { position: absolute; left: 50%; transform: translateX(-50%); }
+    </style>
+    <form>
+      {% csrf_token %}
+        <section class="section">
+          <div class="field">
+            <label class="label">Nickname</label>
+              <input class="input" type="text" id = "signup_nick">
+          </div>
+          <div class="field">
+            <label class="label">name</label>
+              <input class="input" type="text" id = "signup_name">
+          </div>
+          <div class="field">
+            <label class="label">Email</label>
+            <input class="input" type="text" id = "signup_email">
+          </div>
+          <div class="field">
+            <label class="label">UserID</label>
+            <div class="control has-icons-right">
+              <input class="input" type="text" id = "signup_id">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <input class="input" type="password" id = "signup_pw">
+          </div>
+          <div class="has-text-centered">
+            <button id = "signup_btn" type="button" class="">Sign Up!</button>
+          </div>
+          <div class="has-text-centered">
+            <a href="/"> Already have an account? Log in now !</a>
+          </div>
+        </section>
+      </div>
+
+    </form>
+    <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+      $('[id = signup_btn]').click(() => {
+      $.ajax({  
+          type : 'post',
+          url : '/signup_function/',
+          data : {
+            'signup_nick' : $('[id = signup_nick]').val(),
+            'signup_name' : $('[id = signup_name]').val(),                 
+            'signup_email' : $('[id = signup_email]').val(),
+            'signup_id' : $('[id = signup_id]').val(),
+            'signup_pw' : $('[id = signup_pw]').val(),
+            'csrfmiddlewaretoken' : $("[name = csrfmiddlewaretoken]").val()
+          },
+          success: function(res){
+              if (res == 0) {alert("회원가입이 완료되었습니다.\n아이디는 {{ request.session.user.name }}, 이메일은 {{ request.session.user.email}}"); location.href = "/"}
+              else if (res == 1) {alert("ID랑 email을 확인해주세요")}
+          },
+        });
+      } )
+    </script>
+
+  </body>
+</html>
