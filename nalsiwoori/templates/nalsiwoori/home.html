@@ -149,7 +149,7 @@
           var get_lng
 
           $.ajax({
-            url:'/nalsiwoori/load_sel_db/',
+            url:'/load_sel_db/',
             async:false,
             success:function(res){
               get_state = res[res.length - 1].state
@@ -168,7 +168,7 @@
             })
 
           $.ajax({
-            url:'/nalsiwoori/load_map_db/',
+            url:'/load_map_db/',
             async:false,
             success:function(res){
               var positions = new Array();
@@ -181,7 +181,7 @@
                 var customOverlay = new kakao.maps.CustomOverlay({
                   position: positions[i],
                   // div class label > kakao_label로 수정
-                  content: `<div class ="kakao_label id="kakao_label">
+                  content: `<div class ="kakao_label" id="kakao_label">
                     <span class="left"></span>
                     <span class="center" style="font-weight:bold;">
                     <img src="/static/nalsiwoori/images/${res[i].icon}.png">
