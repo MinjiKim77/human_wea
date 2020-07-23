@@ -91,18 +91,6 @@
             })
           })
         </script>
-        <!-- <div class="container">
-          <div class="panel panel-default">
-            <div class="panel-heading">실시간 온도</div>
-            <div class="panel-body">Panel Content</div>
-          </div>
-        </div>
-        <div class="container">
-            <div class="panel panel-default">
-            <div class="panel-heading">실시간 날씨</div>
-            <div class="panel-body">Panel Content</div>
-          </div>
-        </div> -->
         
       <!-- 지역 선택하는 select 하드코딩__DB연동 후 수정 예정 -->
         <script>
@@ -187,8 +175,12 @@
               get_lng = res[res.length - 1].lng
 
               var moveLatLon = new kakao.maps.LatLng(get_lat, get_lng);
-              map.panTo(moveLatLon); 
-
+              map.panTo(moveLatLon);
+              // 지도를 1레벨 내립니다 (지도가 확대됩니다)
+              map.setLevel(5);
+              // // 지도 레벨을 표시합니다
+              displayLevel();
+              
               }
             })
 
@@ -287,4 +279,5 @@
     <div class="Copyright">
       <a target="_blank" href="">Copyright. nalsiwoori_team</a>
     </div>
+
 </body>
