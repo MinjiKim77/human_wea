@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from .models import *
 from django.utils import timezone
+from .models import *
+from account.models import *
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.contrib.auth.hashers import check_password
@@ -39,32 +40,19 @@ def log_wea(request):
     city = request.GET.get('city1')
     cur_wea = request.GET.get('cur_wea')
 
-    md = map_data.objects.get(state=state, city=city)
+    try:
+        md = map_data.objects.get(state=state, city=city)
+    except:
+        md = None
+    finally:
+        uu = request.session['user']
+        user = User.objects.get(id=request.session['user']['id'])
 
-    sel = Selection(map_idx=0, map_data=md, user_data_id=1, state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
-    sel.save()
+        sel = Selection(map_idx=0, map_data=md, user_data=user, state=state, city=city, cur_wea=cur_wea, pub_date=timezone.now())
+        sel.save()
 
     return JsonResponse({'result':'날씨가 입력되었습니다.'})
     # return HttpResponse(html)
-
-def sel_wea(request):
-    # state = request.GET.get('state1')
-    # city = request.GET.get('city1')
-    # state = request.GET.get('si')
-    # city = request.GET.get('gu')
-
-    
-    # request.session['wea']['si']=si
-    # request.session['wea']['gu']=gu
-    
-    # dict1 = {'result':'입력성공','data':state}
-    # return render(request, 'nalsiwoori/weather.html',{'state':state, 'city'})
-    state = request.GET.get('si')
-    city = request.GET.get('gu')
-   
-
-    # return render(request,{"state":state,"city":city} )
-    return render(request, [state, city] )
 
 def load_map_db(request):
     map_datas = map_data.objects.all()
@@ -101,17 +89,7 @@ def load_map_db(request):
 
 
 def load_sel_db(request):
-    # sel_datas = Selection.objects.all().select_related('map_data').values_list('state','city','map_data_id__lat','map_data_id__lng')
-    # temp = map_data.objects.all()  # map_data 모두 조회
-    # sel_datas = []
-    # for data in temp:
-    #     selections = data.selection_set.order_by('-pub_date')
-    #     if selections:
-    #         sel = data.selection_set.order_by('-pub_date')[:1][0]
-    #         obj = model_to_dict(data)
-    #         obj['cur_wea'] = sel.cur_wea
-    #         sel_datas.append(obj)
-
+   
     temp = Selection.objects.all().select_related('map_data')
     sel_datas = []
     for data in temp:

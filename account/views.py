@@ -61,6 +61,9 @@ def signup_function(request) :
 def find_id(request):
     return render(request, 'account/find_id.html')
 
+def find_pw(request):
+    return render(request, 'account/find_pw.html')
+
 # session값 클리어 후, 로그아웃_구현중
 
 def find_id_function(request):
@@ -72,9 +75,6 @@ def find_id_function(request):
         return JsonResponse(model_to_dict(user), safe=False)
     except:
         return JsonResponse({'result':'fail'}, safe=False)
-
-def find_pw(request):
-    return render(request, 'account/find_pw.html')
 
 def find_pw_function(request):
     find_pw_id = request.POST.get('find_pw_id')

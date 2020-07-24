@@ -8,7 +8,5 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('weather/', views.weather, name='weather'),
     path('log_wea/', views.log_wea, name='log_wea'),
-    path('sel_wea/', views.sel_wea, name='sel_wea'),
     path('load_sel_db/', views.load_sel_db, name='load_sel_db'),
 ]
-

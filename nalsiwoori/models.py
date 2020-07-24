@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from account.models import User
 
 class Users(models.Model): 
     user_name= models.CharField(max_length=64)
@@ -16,8 +17,8 @@ class map_data(models.Model):
     map_y = models.IntegerField(max_length=255)
 
 class Selection(models.Model):
-    user_data = models.ForeignKey(Users, on_delete=models.CASCADE, default=0)
-    map_data = models.ForeignKey(map_data, on_delete=models.CASCADE, default=0)
+    user_data = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
+    map_data = models.ForeignKey(map_data, on_delete=models.CASCADE, null=True)
     map_idx = models.IntegerField(max_length=255)
 
     state = models.CharField(max_length=255)
