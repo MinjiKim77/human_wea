@@ -47,9 +47,6 @@
                 'csrfmiddlewaretoken' : $("[name = csrfmiddlewaretoken]").val()
             },
             success: function(res){
-                
-                
-                // if (res == 0) {location.href = "/nalsiwoori/home/"}
                 if (res == 1) {alert("비밀번호를 확인해주세요.")}
                 else if (res == 2) {alert("아이디를 확인해주세요.")}
                 else
@@ -58,5 +55,5 @@
             },
         });
     })
-  </script>
+</script>
 </html>

@@ -131,12 +131,10 @@
 
     
     </div>
-  
     <div id="chatLog" class="chat_log" readonly>
       <img src="" id="img"></img>
     </div>
-
-    <div id="map" style="width:600px;height:400px; margin-left: 20px; margin-right: auto;">
+    <div id="map" style="width:800px;height:400px; margin-left: 20px; margin-right: auto;">
       <script type="text/javascript"
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f98f6adb5864070de89a0c8e21bf7951"></script>
       <script>
@@ -166,9 +164,9 @@
             get_lat = res[res.length - 1].lat
             get_lng = res[res.length - 1].lng
 
-            console.log(get_state)
             var moveLatLon = new kakao.maps.LatLng(get_lat, get_lng);
-            map.panTo(moveLatLon);
+            map.panTo(moveLatLon); 
+
             }
           })
 
@@ -274,7 +272,6 @@
             </tbody>
           </table>
         </div>
-
       </div>  
     
     </div>
