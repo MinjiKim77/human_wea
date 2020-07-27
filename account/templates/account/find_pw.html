@@ -3,34 +3,36 @@
   <head>
     <meta charset="utf-8">
     <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style type="text/css"></style>
+    <link rel= "stylesheet" type="text/css" href="/static/account/css/signup.css">
     <title>Sign Up</title>
   </head>
   <body>
     <style>
         .section { position: absolute; left: 50%; transform: translateX(-50%); }
     </style>
+    <wrapper class = "wrapper">
     <form>
       {% csrf_token %}
         <section class="section">
           <div class="field">
-            <label class="label">id</label>
-            <div class="control has-icons-right">
-              <input class="input" type="text" id = "find_pw_id">
-            </div>
-          </div>
+            <div class="control has-icons-right"> 
+          <div class="container">
+            <h3><strong>비밀번호 찾기</strong></h3><br>
+            
           <div class="field">
-            <label class="label">Email</label>
+            <input class="input" type="text"  placeholder="ID" id = "find_pw_id">
+            
             <div class="control has-icons-right">
-              <input class="input" type="text" id = "find_pw_email">
-            </div>
-          </div>
+              <input class="input" type="text"  placeholder="E-mail" id = "find_pw_email">
+            
           <div class="has-text-centered">
             <button id="find_pw_btn">Find PW!</button>
           </div>
         </section>
       </div>
     </form>
-    
+  </wrapper>
   </body>
 </html>
 <script>

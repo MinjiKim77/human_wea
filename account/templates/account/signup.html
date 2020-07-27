@@ -5,44 +5,49 @@
     <title>Sign Up</title>
   </head>
   <body>
+    <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
+    <style type="text/css"></style>
+    <link rel= "stylesheet" type="text/css" href="/static/account/css/signup.css">
     <style>
         .section { position: absolute; left: 50%; transform: translateX(-50%); }
     </style>
+    <wrapper class = "wrapper">
     <form>
       {% csrf_token %}
         <section class="section">
+        
+          <h3><strong>가입하기</strong></h3><br>
           <div class="field">
-            <label class="label">Nickname</label>
-              <input class="input" type="text" id = "signup_nick">
+            
+            <input class="input" type="text" placeholder="닉네임을 입력하세요" id = "signup_nick">
           </div>
           <div class="field">
-            <label class="label">name</label>
-              <input class="input" type="text" id = "signup_name">
+              <input class="input" type="text" placeholder="이름을 입력하세요 "id = "signup_name">
           </div>
           <div class="field">
-            <label class="label">Email</label>
-            <input class="input" type="text" id = "signup_email">
+            
+            <input class="input" type="text" placeholder="이메일을 입력하세요 "id = "signup_email">
           </div>
           <div class="field">
-            <label class="label">UserID</label>
             <div class="control has-icons-right">
-              <input class="input" type="text" id = "signup_id">
+              <input class="input" type="text"placeholder="아이디를 입력하세요" id = "signup_id">
             </div>
           </div>
           <div class="field">
-            <label class="label">Password</label>
-            <input class="input" type="password" id = "signup_pw">
+            <input class="input" type="password" placeholder="비밀번호를 입력하세요" id = "signup_pw">
           </div>
           <div class="has-text-centered">
             <button id = "signup_btn" type="button" class="">Sign Up!</button>
           </div>
           <div class="has-text-centered">
-            <a href="/"> Already have an account? Log in now !</a>
+           Already have an account? <a href="/">  Log in now !</a>
           </div>
         </section>
       </div>
 
     </form>
+  </wrapper>
     <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
       $('[id = signup_btn]').click(() => {

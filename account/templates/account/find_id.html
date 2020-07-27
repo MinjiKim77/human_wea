@@ -3,34 +3,37 @@
   <head>
     <meta charset="utf-8">
     <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style type="text/css"></style>
+    <link rel= "stylesheet" type="text/css" href="/static/account/css/signup.css">
     <title>Sign Up</title>
   </head>
   <body>
     <style>
         .section { position: absolute; left: 50%; transform: translateX(-50%); }
     </style>
-    <form>
-      {% csrf_token %}
-        <section class="section">
+    <wrapper class = "wrapper">
+      <form>
+      {% csrf_token %} 
+       <section class="section">
+        <div class="field">
+        <div class="control has-icons-right"> 
+        <div class="container">
+          <h3><strong>ID 찾기</strong></h3><br>
+        
+              <input class="input" type="text" placeholder="이름"id = "find_id_name">
+            
           <div class="field">
-            <label class="label">name</label>
             <div class="control has-icons-right">
-              <input class="input" type="text" id = "find_id_name">
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control has-icons-right">
-              <input class="input" type="text" id = "find_id_email">
-            </div>
-          </div>
+              <input class="input" type="text" placeholder="E-mail" id = "find_id_email">
+            
           <div class="has-text-centered">
             <button id="find_id_btn">Find ID!</button>
           </div>
         </section>
-      </div>
-    </form>
     
+    </form>
+    </wrapper>
+
   </body>
 </html>
 <script>

@@ -3,26 +3,38 @@
     <head>
         <meta charset="utf-8">
         <script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
+        <style type="text/css"></style>
+        <link rel= "stylesheet" type="text/css" href="/static/account/css/login.css">
     </head>
 <body>
 
-    <form>
+
     {% csrf_token %}
-        <div class="control">
-            <input type="text" placeholder="ID" id = "login_id">
+    <div class ="wrapper">
+        <div class="container">
+            <h1> WELCOME TO NALSIWOORI </h1>
+                <form class='form'>
+                    <input type="text" placeholder="ID" id = "login_id">
+                    <input type="password" placeholder="Password" id = "login_pw">
+                    <button id = loginbtn type="button">Log In</button><br>
+                    <p class= "text"><a href = '/signup'>Sign up</a>
+                        <a href = '/find_id'>ID 찾기</a>
+                        <a href = '/find_pw'>PW 찾기</a></p>
+                    <!-- <button id = signup type="button"><a href = '/signup'>Sign up</button><br>
+                    <button id = find_id type="button"><a href = '/find_id'>아이디 찾기</a></button><br>
+                    <button id= find_pw type="button"><a href = '/find_pw'>비밀번호 찾기</a></button> -->
+                </form>
         </div>
-        <div class="control">
-            <input type="password" placeholder="Password" id = "login_pw">
-        </div>
-        <button id = loginbtn type="button">Log In</button>
-        <br>
-        <button type="button"><a href = '/signup'>Sign up</a></button>
-        <br>
-        <button type="button"><a href = '/find_id'>아이디 찾기</a></button>
-        <br>
-        <button type="button"><a href = '/find_pw'>비밀번호 찾기</a></button>
-        <br>
-    </form>
+         <ul class="bg-bubbles">
+      <li></li>
+  
+   </ul>
+    </div>
+
+
+
+    
 </body>
 <script>
     $('[id = loginbtn]').click(() => {
